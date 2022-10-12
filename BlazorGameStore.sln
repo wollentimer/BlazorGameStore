@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorGameStore.Server", "BlazorGameStore\Server\BlazorGameStore.Server.csproj", "{5392FDB0-EF59-4790-B3AC-A91BA7F0361C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorGameStore.Server", "BlazorGameStore\Server\BlazorGameStore.Server.csproj", "{5392FDB0-EF59-4790-B3AC-A91BA7F0361C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorGameStore.Client", "BlazorGameStore\Client\BlazorGameStore.Client.csproj", "{E5451A1A-9B8D-4905-88F3-4DEA99446B2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorGameStore.Client", "BlazorGameStore\Client\BlazorGameStore.Client.csproj", "{E5451A1A-9B8D-4905-88F3-4DEA99446B2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorGameStore.Shared", "BlazorGameStore\Shared\BlazorGameStore.Shared.csproj", "{6E7B7E8C-4604-48E9-92F3-1770EA9D0875}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorGameStore.Shared", "BlazorGameStore\Shared\BlazorGameStore.Shared.csproj", "{6E7B7E8C-4604-48E9-92F3-1770EA9D0875}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
