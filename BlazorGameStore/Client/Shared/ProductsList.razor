@@ -4,25 +4,23 @@
     @foreach (var product in ProductService.Products)
     {
         <li class="media my-3">
-            <div class="flex-row">
-                <div class="media-img-wrapper">
-                    <a href="/product/@product.Id">
-                        <img class="media-img" src="@product.Image" alt="@product.Title" />
-                    </a>
-                    <h5 class="price">
-                        $@product.Price
-                    </h5>
-                    @if (product.OriginalPrice > product.Price)
-                    {
-                        <h6 class="text-muted original-price">$@product.OriginalPrice</h6>
-                    }
-                </div>
-                <div class="media-body">
-                    <a href="/product/@product.Id">
-                        <h4 class="mb-0">@product.Title</h4>
-                    </a>
-                    <p class="product-description">@product.Description</p>
-                </div>
+            <div class="media-img-wrapper">
+                <a href="/product/@product.Id">
+                    <img class="media-img" src="@product.Image" alt="@product.Title" />
+                </a>
+            </div>
+            <div class="media-body">
+                <a href="/product/@product.Id">
+                    <h4 class="mb-0">@product.Title</h4>
+                </a>
+                <h5 class="price">
+                    $@product.Price
+                </h5>
+                @if (product.OriginalPrice > product.Price)
+                {
+                    <h6 class="text-muted original-price">$@product.OriginalPrice</h6>
+                }
+                <p class="product-description">@product.Description</p>
             </div>
 
         </li>
