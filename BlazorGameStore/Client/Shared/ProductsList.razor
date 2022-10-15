@@ -5,7 +5,7 @@
     @foreach (var product in ProductService.Products)
     {
         <li class="media my-3">
-            <div class="media-img-wrapper">
+            <div class="media-img-wrapper mr-2">
                 <a href="/product/@product.Id">
                     <img class="media-img" src="@product.Image" alt="@product.Title" />
                 </a>
@@ -33,7 +33,7 @@
     //[Parameter]
     //public int? CategoryId { get; set; } = null;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         //await ProductService.LoadProductsAsync();
         ProductService.OnChange += StateHasChanged;

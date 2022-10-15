@@ -29,7 +29,7 @@ namespace BlazorGameStore.Client.Services.ProductService
             OnChange.Invoke();
         }
 
-        public async Task<Product> GetProduct(int id)
+        public async Task<Product> GetProductAsync(int id)
         {
             return await _http.GetFromJsonAsync<Product>($"api/Product/{id}");
         }

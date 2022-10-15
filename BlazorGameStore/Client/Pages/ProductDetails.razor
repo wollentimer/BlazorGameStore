@@ -1,4 +1,4 @@
-﻿@page "/product/{id}"
+﻿@page "/product/{id:int}"
 @inject IProductService ProductService
 
 <div class="media">
@@ -28,8 +28,8 @@
     public int Id { get; set; }
 
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        product = await ProductService.GetProduct(Id);
+        product = await ProductService.GetProductAsync(Id);
     }
 }

@@ -10,6 +10,6 @@ namespace BlazorGameStore.Client.Services.ProductService
 
         Task LoadProductsAsync(string categoryUrl = null);
 
-        Task<Product> GetProduct(int id);
+        Task<Product> GetProductAsync(int id);
     }
 }
