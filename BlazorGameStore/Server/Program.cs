@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using BlazorGameStore.Server.Services.CategoryService;
+using BlazorGameStore.Server.Services.ProductService;
 
 namespace BlazorGameStore
 {
@@ -12,7 +13,8 @@ namespace BlazorGameStore
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
-
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

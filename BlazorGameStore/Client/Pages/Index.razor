@@ -1,12 +1,13 @@
 ﻿@page "/"
 @page "/{categoryurl}"
-@inject ICategoryService CategoryService;
+@inject ICategoryService CategoryService
+@inject IProductService ProductService
 
 @if (category != null)
 {
     <h1>Welcome to the @category.Name section!</h1>
 
-    <ProductsList CategoryId="@category.Id" />
+    <ProductsList />
 }
 else
 {
@@ -22,10 +23,12 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
+        await ProductService.LoadProductsAsync(CategoryUrl);
+
         if (CategoryUrl != null)
         {
-            category = CategoryService.Categories.FirstOrDefault(c =>
-                c.Url.ToLower().Equals(CategoryUrl.ToLower()));
+            category = CategoryService.Categories
+            .FirstOrDefault(c => c.Url.ToLower().Equals(CategoryUrl.ToLower()));
         }
         else
         {
