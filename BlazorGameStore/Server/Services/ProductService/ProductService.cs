@@ -23,7 +23,8 @@ namespace BlazorGameStore.Server.Services.ProductService
 
         public async Task<Product> GetProductAsync(int id)
         {
-            Product product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            Product product = await _context.Products
+                .Include(e => e.Editions).FirstOrDefaultAsync(p => p.Id == id);
             
             return product;
         }

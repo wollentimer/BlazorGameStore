@@ -4,6 +4,7 @@ using BlazorGameStore.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorGameStore.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221016133328_Add_Editions")]
+    partial class Add_Editions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,43 +87,6 @@ namespace BlazorGameStore.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Editions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Default"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Paperback"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "E-Book"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Audiobook"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "PC"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "PlayStation"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Xbox"
-                        });
                 });
 
             modelBuilder.Entity("BlazorGameStore.Shared.Product", b =>
@@ -304,48 +269,6 @@ namespace BlazorGameStore.Server.Migrations
                     b.HasIndex("ProductsId");
 
                     b.ToTable("EditionProduct");
-
-                    b.HasData(
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 1
-                        },
-                        new
-                        {
-                            EditionsId = 2,
-                            ProductsId = 1
-                        },
-                        new
-                        {
-                            EditionsId = 3,
-                            ProductsId = 1
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 2
-                        },
-                        new
-                        {
-                            EditionsId = 2,
-                            ProductsId = 2
-                        },
-                        new
-                        {
-                            EditionsId = 4,
-                            ProductsId = 7
-                        },
-                        new
-                        {
-                            EditionsId = 5,
-                            ProductsId = 7
-                        },
-                        new
-                        {
-                            EditionsId = 6,
-                            ProductsId = 7
-                        });
                 });
 
             modelBuilder.Entity("BlazorGameStore.Shared.Product", b =>
