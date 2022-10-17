@@ -40,30 +40,61 @@ namespace BlazorGameStore.Client.Services.CartService
             OnChange.Invoke();
         }
 
-        //public async Task<List<CartItem>> GetCartItems()
-        //{
-        //    var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
-        //    if (cart == null)
-        //    {
-        //        return new List<CartItem>();
-        //    }
-        //    return cart;
-        //}
+        public async Task<List<CartItem>> GetCartItems()
+        {
+            var result = new List<CartItem>();
+            var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+            if (cart == null)
+            {
+                return result;
+            }
 
-        //public async Task DeleteItem(CartItem item)
-        //{
-        //    var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
-        //    if (cart == null)
-        //    {
-        //        return;
-        //    }
+            foreach (var item in cart)
+            {
+                var product = await _productService.GetProductAsync(item.ProductId);
+                var cartItem = new CartItem
+                {
+                    ProductId = product.Id,
+                    ProductTitle = product.Title,
+                    Image = product.Image,
+                    EditionId = item.EditionId
+                };
 
-        //    var cartItem = cart.Find(x => x.ProductId == item.ProductId && x.EditionId == item.EditionId);
-        //    cart.Remove(cartItem);
+                var variant = product.Variants.Find(v => v.EditionId == item.EditionId);
+                if (variant != null)
+                {
+                    cartItem.EditionName = variant.Edition?.Name;
+                    cartItem.Price = variant.Price;
+                }
 
-        //    await _localStorage.SetItemAsync("cart", cart);
-        //    OnChange.Invoke();
-        //}
+                result.Add(cartItem);
+            }
+
+            return result;
+
+
+            //var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+            //if (cart == null)
+            //{
+            //    return new List<CartItem>();
+            //}
+            //return cart;
+        }
+
+        public async Task DeleteItem(CartItem item)
+        {
+            var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+            if (cart == null)
+            {
+                return;
+            }
+
+            var cartItem = cart.Find(x => x.ProductId == item.ProductId && x.EditionId == item.EditionId);
+            cart.Remove(cartItem);
+
+            await _localStorage.SetItemAsync("cart", cart);
+            OnChange.Invoke();
+        }
 
         //public async Task EmptyCart()
         //{
