@@ -4,6 +4,7 @@ using BlazorGameStore.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorGameStore.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221016133328_Add_Editions")]
+    partial class Add_Editions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,43 +87,6 @@ namespace BlazorGameStore.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Editions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Default"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Paperback"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "E-Book"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Audiobook"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "PC"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "PlayStation"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Xbox"
-                        });
                 });
 
             modelBuilder.Entity("BlazorGameStore.Shared.Product", b =>
@@ -155,6 +120,12 @@ namespace BlazorGameStore.Server.Migrations
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
+                    b.Property<decimal>("OriginalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -175,6 +146,8 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/en/b/bd/H2G2_UK_front_cover.jpg",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "The Hitchhiker's Guide to the Galaxy"
                         },
                         new
@@ -186,6 +159,8 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/en/a/a4/Ready_Player_One_cover.jpg",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "Ready Player One"
                         },
                         new
@@ -197,6 +172,8 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/commons/c/c3/1984first.jpg",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "Nineteen Eighty-Four"
                         },
                         new
@@ -208,6 +185,8 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/commons/e/e9/Honeywell-Pentax-Spotmatic.jpg",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "Pentax Spotmatic"
                         },
                         new
@@ -219,6 +198,8 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox-console.jpg",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "Xbox"
                         },
                         new
@@ -230,6 +211,8 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "Super Nintendo Entertainment System"
                         },
                         new
@@ -241,6 +224,8 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/en/2/25/Half-Life_2_cover.jpg",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "Half-Life 2"
                         },
                         new
@@ -252,6 +237,8 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/en/d/d5/Diablo_II_Coverart.png",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "Diablo II"
                         },
                         new
@@ -263,122 +250,25 @@ namespace BlazorGameStore.Server.Migrations
                             Image = "https://upload.wikimedia.org/wikipedia/en/7/79/Day_of_the_Tentacle_artwork.jpg",
                             IsDeleted = false,
                             IsPublic = false,
+                            OriginalPrice = 0m,
+                            Price = 0m,
                             Title = "Day of the Tentacle"
                         });
                 });
 
-            modelBuilder.Entity("BlazorGameStore.Shared.ProductVariant", b =>
+            modelBuilder.Entity("EditionProduct", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("EditionsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EditionId")
+                    b.Property<int>("ProductsId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("OriginalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasKey("EditionsId", "ProductsId");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasIndex("ProductsId");
 
-                    b.HasKey("ProductId", "EditionId");
-
-                    b.HasIndex("EditionId");
-
-                    b.ToTable("ProductVariant");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            EditionId = 2,
-                            OriginalPrice = 19.99m,
-                            Price = 9.99m
-                        },
-                        new
-                        {
-                            ProductId = 1,
-                            EditionId = 3,
-                            OriginalPrice = 0m,
-                            Price = 7.99m
-                        },
-                        new
-                        {
-                            ProductId = 1,
-                            EditionId = 4,
-                            OriginalPrice = 29.99m,
-                            Price = 19.99m
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            EditionId = 2,
-                            OriginalPrice = 14.99m,
-                            Price = 7.99m
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            EditionId = 2,
-                            OriginalPrice = 0m,
-                            Price = 6.99m
-                        },
-                        new
-                        {
-                            ProductId = 4,
-                            EditionId = 1,
-                            OriginalPrice = 249.00m,
-                            Price = 166.66m
-                        },
-                        new
-                        {
-                            ProductId = 5,
-                            EditionId = 1,
-                            OriginalPrice = 299m,
-                            Price = 159.99m
-                        },
-                        new
-                        {
-                            ProductId = 6,
-                            EditionId = 1,
-                            OriginalPrice = 400m,
-                            Price = 73.74m
-                        },
-                        new
-                        {
-                            ProductId = 7,
-                            EditionId = 5,
-                            OriginalPrice = 29.99m,
-                            Price = 19.99m
-                        },
-                        new
-                        {
-                            ProductId = 7,
-                            EditionId = 6,
-                            OriginalPrice = 0m,
-                            Price = 69.99m
-                        },
-                        new
-                        {
-                            ProductId = 7,
-                            EditionId = 7,
-                            OriginalPrice = 59.99m,
-                            Price = 49.99m
-                        },
-                        new
-                        {
-                            ProductId = 8,
-                            EditionId = 5,
-                            OriginalPrice = 24.99m,
-                            Price = 9.99m
-                        },
-                        new
-                        {
-                            ProductId = 9,
-                            EditionId = 5,
-                            OriginalPrice = 0m,
-                            Price = 14.99m
-                        });
+                    b.ToTable("EditionProduct");
                 });
 
             modelBuilder.Entity("BlazorGameStore.Shared.Product", b =>
@@ -392,33 +282,24 @@ namespace BlazorGameStore.Server.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("BlazorGameStore.Shared.ProductVariant", b =>
+            modelBuilder.Entity("EditionProduct", b =>
                 {
-                    b.HasOne("BlazorGameStore.Shared.Edition", "Edition")
+                    b.HasOne("BlazorGameStore.Shared.Edition", null)
                         .WithMany()
-                        .HasForeignKey("EditionId")
+                        .HasForeignKey("EditionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BlazorGameStore.Shared.Product", "Product")
-                        .WithMany("Variants")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("BlazorGameStore.Shared.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Edition");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BlazorGameStore.Shared.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("BlazorGameStore.Shared.Product", b =>
-                {
-                    b.Navigation("Variants");
                 });
 #pragma warning restore 612, 618
         }
