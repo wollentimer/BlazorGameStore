@@ -14,33 +14,39 @@
                 <a href="/product/@product.Id">
                     <h4 class="mb-0">@product.Title</h4>
                 </a>
+                <p>@product.Description</p>
                 <h5 class="price">
-                    $@product.Price
+                    @GetPriceText(product)
                 </h5>
-                @if (product.OriginalPrice > product.Price)
-                {
-                    <h6 class="text-muted original-price">$@product.OriginalPrice</h6>
-                }
-                <p class="product-description">@product.Description</p>
             </div>
-
         </li>
     }
 </ul>
 
-
 @code {
-    //[Parameter]
-    //public int? CategoryId { get; set; } = null;
 
     protected override void OnInitialized()
     {
-        //await ProductService.LoadProductsAsync();
         ProductService.OnChange += StateHasChanged;
     }
 
     public void Dispose()
     {
         ProductService.OnChange -= StateHasChanged;
+    }
+
+    private string GetPriceText(Product product)
+    {
+        var variants = product.Variants;
+        if (variants.Count == 0)
+        {
+            return string.Empty;
+        }
+        else if (variants.Count == 1)
+        {
+            return $"${variants[0].Price}";
+        }
+        decimal minPrice = variants.Min(v => v.Price);
+        return $"Starting at ${minPrice}";
     }
 }

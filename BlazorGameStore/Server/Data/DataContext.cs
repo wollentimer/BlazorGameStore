@@ -14,6 +14,9 @@ namespace BlazorGameStore.Server.Data
         public DbSet<Edition> Editions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProductVariant>()
+                .HasKey(p => new { p.ProductId, p.EditionId });
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Books", Url = "books", Icon = "book" },
                 new Category { Id = 2, Name = "Electronics", Url = "electronics", Icon = "camera-slr" },
@@ -114,18 +117,95 @@ namespace BlazorGameStore.Server.Data
                 new Edition { Id = 7, Name = "Xbox" }
             );
 
-            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("EditionProduct")
-                .HasData(
-                    new { EditionsId = 1, ProductsId = 1 },
-                    new { EditionsId = 2, ProductsId = 1 },
-                    new { EditionsId = 3, ProductsId = 1 },
-                    new { EditionsId = 1, ProductsId = 2 },
-
-                    new { EditionsId = 2, ProductsId = 2 },
-                    new { EditionsId = 4, ProductsId = 7 },
-                    new { EditionsId = 5, ProductsId = 7 },
-                    new { EditionsId = 6, ProductsId = 7 }
-                );
+            modelBuilder.Entity<ProductVariant>().HasData(
+                new ProductVariant
+                {
+                    ProductId = 1,
+                    EditionId = 2,
+                    Price = 9.99m,
+                    OriginalPrice = 19.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 1,
+                    EditionId = 3,
+                    Price = 7.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 1,
+                    EditionId = 4,
+                    Price = 19.99m,
+                    OriginalPrice = 29.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 2,
+                    EditionId = 2,
+                    Price = 7.99m,
+                    OriginalPrice = 14.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 3,
+                    EditionId = 2,
+                    Price = 6.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 4,
+                    EditionId = 1,
+                    Price = 166.66m,
+                    OriginalPrice = 249.00m
+                },
+                new ProductVariant
+                {
+                    ProductId = 5,
+                    EditionId = 1,
+                    Price = 159.99m,
+                    OriginalPrice = 299m
+                },
+                new ProductVariant
+                {
+                    ProductId = 6,
+                    EditionId = 1,
+                    Price = 73.74m,
+                    OriginalPrice = 400m
+                },
+                new ProductVariant
+                {
+                    ProductId = 7,
+                    EditionId = 5,
+                    Price = 19.99m,
+                    OriginalPrice = 29.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 7,
+                    EditionId = 6,
+                    Price = 69.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 7,
+                    EditionId = 7,
+                    Price = 49.99m,
+                    OriginalPrice = 59.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 8,
+                    EditionId = 5,
+                    Price = 9.99m,
+                    OriginalPrice = 24.99m,
+                },
+                new ProductVariant
+                {
+                    ProductId = 9,
+                    EditionId = 5,
+                    Price = 14.99m
+                }
+            );
         }
 
     }
