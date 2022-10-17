@@ -1,4 +1,6 @@
 ﻿@inject ICategoryService CategoryService
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthStateProvider
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -16,9 +18,7 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
-
-        <div class="dropdown-divider"></div>
-
+        <li class="dropdown-divider"></li>
         @foreach (var category in CategoryService.Categories)
         {
             <li class="nav-item px-3">
@@ -27,7 +27,21 @@
                 </NavLink>
             </li>
         }
-
+        <li class="dropdown-divider"></li>
+        <li class="nav-item px-3">
+            <AuthorizeView>
+                <NotAuthorized>
+                    <NavLink class="nav-link" href="login">
+                        <span class="oi oi-account-login" aria-hidden="true"></span> Login
+                    </NavLink>
+                </NotAuthorized>
+                <Authorized>
+                    <a class="nav-link" @onclick="Logout" style="cursor: pointer">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
+                    </a>
+                </Authorized>
+            </AuthorizeView>
+        </li>
     </ul>
 </div>
 
@@ -44,5 +58,12 @@
     protected override async Task OnInitializedAsync()
     {
         await CategoryService.LoadCategoriesAsync();
+    }
+
+    private async void Logout()
+    {
+        await LocalStorage.RemoveItemAsync("username");
+        
+        await AuthStateProvider.GetAuthenticationStateAsync();
     }
 }
