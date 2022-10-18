@@ -1,9 +1,49 @@
 ﻿@page "/"
+@page "/{categoryurl}"
+@inject ICategoryService CategoryService;
+@inject IProductService ProductService
+@inject ISyncLocalStorageService LocalStorage
+@inject IStatsService StatsService
 
-<PageTitle>Index</PageTitle>
+@if (category != null)
+{
+    <h1>Welcome to the @category.Name section!</h1>
+    <ProductsList />
+}
+else
+{
+    <AuthorizeView>
+        <NotAuthorized>
+            <h1>Welcome to Blazing Shop!</h1>
+        </NotAuthorized>
+        <Authorized>
+            <h1>Welcome back, @LocalStorage.GetItemAsString("username")!</h1>
+        </Authorized>
+    </AuthorizeView>
+    <ProductsList />
+}
 
-<h1>Hello, world!</h1>
+@code {
+    [Parameter]
+    public string CategoryUrl { get; set; }
 
-Welcome to your new app.
+    private Category category = null;
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    protected override async Task OnParametersSetAsync()
+    {
+        await ProductService.LoadProductsAsync(CategoryUrl);
+
+        if (CategoryUrl != null)
+        {
+            category = CategoryService.Categories
+            .FirstOrDefault(c => c.Url.ToLower().Equals(CategoryUrl.ToLower()));
+        }
+        else
+        {
+            category = null;
+        }
+
+        await StatsService.IncrementVisits();
+        await StatsService.GetVisits();
+    }
+}
