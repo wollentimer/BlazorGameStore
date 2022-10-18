@@ -1,6 +1,7 @@
 using BlazorGameStore.Server.Data;
 using BlazorGameStore.Server.Services.CategoryService;
 using BlazorGameStore.Server.Services.ProductService;
+using BlazorGameStore.Server.Services.StatsService;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -20,6 +21,7 @@ namespace BlazorGameStore
             });
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IStatsService, StatsService>();
             var app = builder.Build();
             
             if (app.Environment.IsDevelopment())
