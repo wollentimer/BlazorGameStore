@@ -3,6 +3,7 @@ using Blazored.Toast;
 using BlazorGameStore.Client.Services.CartService;
 using BlazorGameStore.Client.Services.CategoryService;
 using BlazorGameStore.Client.Services.ProductService;
+using BlazorGameStore.Client.Services.StatsService;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -26,7 +27,7 @@ namespace BlazorGameStore.Client
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
-
+            builder.Services.AddScoped<IStatsService, StatsService>();
             await builder.Build().RunAsync();
         }
     }
