@@ -30,6 +30,8 @@ namespace BlazorGameStore.Server.Services.ProductService
                 .ThenInclude(v => v.Edition)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
+            product.Views++;
+            
             await _context.SaveChangesAsync();
 
             return product;

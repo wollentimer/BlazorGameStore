@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BlazorGameStore.Shared
+﻿namespace BlazorGameStore.Shared
 {
     public class Product
     {
@@ -15,6 +13,6 @@ namespace BlazorGameStore.Shared
         public List<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
         public DateTime? DateCreated { get; set; } = DateTime.Now;
         public DateTime? DateUpdated { get; set; }
-        //public int Views { get; set; }
+        public int Views { get; set; }
     }
 }
