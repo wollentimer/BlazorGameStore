@@ -37,7 +37,6 @@ namespace BlazorGameStore.Server.Services.ProductService
             return product;
         }
 
-
         public async Task<List<Product>> GetProductsByCategoryAsync(string categoryUrl)
         {
             Category category = await _categoryService.GetCategoryByUrlAsync(categoryUrl);
@@ -45,6 +44,13 @@ namespace BlazorGameStore.Server.Services.ProductService
             return await _context.Products
                 .Include(p => p.Variants)
                 .Where(p => p.CategoryId == category.Id)
+                .ToListAsync();
+        }
+
+        public async Task<List<Product>> SearchProducts(string searchText)
+        {
+            return await _context.Products
+                .Where(p => p.Title.Contains(searchText) || p.Description.Contains(searchText))
                 .ToListAsync();
         }
 

@@ -11,5 +11,8 @@ namespace BlazorGameStore.Client.Services.ProductService
         Task LoadProductsAsync(string categoryUrl = null);
 
         Task<Product> GetProductAsync(int id);
+
+        Task<List<Product>> SearchProducts(string searchText);
+
     }
 }

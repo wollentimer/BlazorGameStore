@@ -77,7 +77,7 @@
         await CartService.AddToCart(cartItem);
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         product = await ProductService.GetProductAsync(Id);
         if (product.Variants.Count > 0)
