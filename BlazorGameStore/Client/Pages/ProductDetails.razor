@@ -5,7 +5,7 @@
 @inject IToastService ToastService
 
 <div class="views">
-    <i class="oi oi-eye"></i> @product.Views.ToString("0##")
+    <i class="oi oi-eye"></i> @GetViewString()
 </div>
 <div class="media">
     <div class="media-img-big-wrapper mr-2">
@@ -35,6 +35,11 @@
                 $@GetSelectedVariant().Price
             </h4>
         }
+        <EditForm Model="cartItem">
+            <div class="form-group">
+                <InputNumber id="quantity" @bind-Value="cartItem.Quantity" class="form-control" style="width: 70px;" />
+            </div>
+        </EditForm>
         <button class="btn btn-primary" @onclick="AddToCart"><i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to Cart</button>
     </div>
 </div>
@@ -45,6 +50,8 @@
     private Product product = new Product();
 
     private int currentEditionId = 1;
+
+    private CartItem cartItem = new CartItem { Quantity = 1 };
 
     [Parameter]
     public int Id { get; set; }
@@ -60,7 +67,14 @@
     {
         var productVariant = GetSelectedVariant();
 
-        await CartService.AddToCart(productVariant);
+        cartItem.EditionId = productVariant.EditionId;
+        cartItem.EditionName = productVariant.Edition.Name;
+        cartItem.Image = product.Image;
+        cartItem.Price = productVariant.Price;
+        cartItem.ProductId = productVariant.ProductId;
+        cartItem.ProductTitle = product.Title;
+
+        await CartService.AddToCart(cartItem);
     }
 
     protected override async Task OnInitializedAsync()
