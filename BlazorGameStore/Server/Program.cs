@@ -1,5 +1,6 @@
 using BlazorGameStore.Server.Data;
 using BlazorGameStore.Server.Services.CategoryService;
+using BlazorGameStore.Server.Services.PaymentService;
 using BlazorGameStore.Server.Services.ProductService;
 using BlazorGameStore.Server.Services.StatsService;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace BlazorGameStore
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IStatsService, StatsService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
             var app = builder.Build();
             
             if (app.Environment.IsDevelopment())
