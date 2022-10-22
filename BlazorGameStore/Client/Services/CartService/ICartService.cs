@@ -6,11 +6,14 @@ namespace BlazorGameStore.Client.Services.CartService
     {
         event Action OnChange;
 
-        Task AddToCart(ProductVariant item);
+        Task AddToCart(CartItem item);
 
         Task<List<CartItem>> GetCartItems();
 
         Task DeleteItem(CartItem item);
-        //Task EmptyCart();
+
+        Task EmptyCart();
+
+        Task<string> Checkout();
     }
 }
