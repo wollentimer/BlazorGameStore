@@ -1,0 +1,24 @@
+﻿@page "/blogposts"
+
+@using BlazorGameStore.Shared
+
+@foreach (var post in Posts)
+{
+    <div style="margin: 20px;">
+        <div>
+            @post.Title
+        </div>
+        <div>
+            @post.Description
+        </div>
+    </div>
+}
+
+
+@code {
+    public List<BlogPost> Posts { get; set; } = new List<BlogPost>()
+    {
+        new BlogPost { Title = "A new blazor tutorial", Description = "This is a new tutorial how to build a blog with Blazor"},
+        new BlogPost { Title = "A new asp.net core tutorial", Description = "This is a new asp.net core tutorial about building an Api with Asp.net core"}
+    };
+}
