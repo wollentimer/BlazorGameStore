@@ -1,6 +1,4 @@
-﻿@page "/blogposts"
-
-@using BlazorGameStore.Shared
+﻿@using BlazorGameStore.Client.Shared.BlogComponents
 
 @foreach (var post in Posts)
 {
@@ -13,7 +11,6 @@
         </div>
     </div>
 }
-
 
 @code {
     public List<BlogPost> Posts { get; set; } = new List<BlogPost>()
