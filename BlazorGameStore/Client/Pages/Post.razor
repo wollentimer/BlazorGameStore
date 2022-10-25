@@ -1,11 +1,20 @@
 ﻿@page "/post/{url}"
 @inject IBlogService BlogService
 
-<h3>@CurrentPost.Title</h3>
 
-<div>
-    @CurrentPost.Content
-</div>
+@if (CurrentPost == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <h3>@CurrentPost.Title</h3>
+
+    <div>
+        @CurrentPost.Content
+    </div>
+
+}
 
 @code {
     private BlogPost CurrentPost { get; set; }
@@ -13,8 +22,8 @@
     [Parameter]
     public string Url { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        CurrentPost = BlogService.GetBlogPostByUrl(Url);
+        CurrentPost = await BlogService.GetBlogPostByUrl(Url);
     }
 }
