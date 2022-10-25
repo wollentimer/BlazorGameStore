@@ -1,24 +1,32 @@
 ﻿using BlazorGameStore.Shared;
+using System;
+using System.Net.Http.Json;
 
 namespace BlazorGameStore.Client.Services.BlogService
 {
     public class BlogService : IBlogService
     {
-        public List<BlogPost> Posts { get; set; } = new List<BlogPost>()
-        {
-            new BlogPost { Url = "new-tutorial-blazor", Title = "A new blazor tutorial", Description = "This is a new tutorial how to build a blog with Blazor", Content="Lorem ipsum qeqwew wqeww qwe weqwe qwewqewqewqe qqweqweww. Qewewew wqeq w."},
-            new BlogPost { Url = "new-tutorial-asp", Title = "A new asp.net core tutorial", Description = "This is a new asp.net core tutorial about building an Api with Asp.net core", Content="Lorem ipsum qeqwew wqeww qwe weqwe qwewqewqewqe qqweqweww. Qewewew wqeq w."}
-        };
+        private readonly HttpClient _httpClient;
 
-        public BlogPost GetBlogPostByUrl(string url)
+        public BlogService(HttpClient httpClient)
         {
-            return Posts.FirstOrDefault(
-                p => p.Url.ToLower().Equals(url.ToLower()));
+            _httpClient = httpClient;
         }
 
-        public List<BlogPost> GetBlogPosts()
+        public async Task<BlogPost> GetBlogPostByUrl(string url)
         {
-            return Posts;
+            //var response = await _httpClient.GetFromJsonAsync<BlogPost>($"https://localhost:7001/api/Blog/{url}");
+            
+            var response = await _httpClient.GetFromJsonAsync<BlogPost>($"/api/Blog/{url}");
+            return response;
+        }
+
+        public async Task<List<BlogPost>> GetBlogPosts()
+        {
+            //var response = await _httpClient.GetFromJsonAsync<List<BlogPost>>("https://localhost:7001/api/Blog");
+            var response = await _httpClient.GetFromJsonAsync<List<BlogPost>>($"/api/Blog");
+
+            return response;
         }
     }
 }
