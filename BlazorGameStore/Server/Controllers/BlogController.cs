@@ -33,5 +33,13 @@ namespace BlazorGameStore.Server.Controllers
             return Ok(post);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<BlogPost>> CreateBlogPost(BlogPost request)
+        {
+            _context.Add(request);
+            await _context.SaveChangesAsync();
+
+            return request;
+        }
     }
 }

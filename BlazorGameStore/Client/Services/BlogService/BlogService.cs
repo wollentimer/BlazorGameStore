@@ -1,5 +1,4 @@
 ﻿using BlazorGameStore.Shared;
-using System;
 using System.Net.Http.Json;
 
 namespace BlazorGameStore.Client.Services.BlogService
@@ -32,5 +31,12 @@ namespace BlazorGameStore.Client.Services.BlogService
         {
             return await _httpClient.GetFromJsonAsync<List<BlogPost>>($"/api/Blog");
         }
+
+        public async Task<BlogPost> CreateBlogPost(BlogPost request)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/Blog", request);
+            return await result.Content.ReadFromJsonAsync<BlogPost>();
+        }
+
     }
 }
