@@ -26,7 +26,7 @@ namespace BlazorGameStore.Server.Controllers
             var post = Posts.FirstOrDefault(p => p.Url.ToLower().Equals(url.ToLower()));
             if (post == null)
             {
-                return NotFound();
+                return NotFound("This post does not exist.");
             }
 
             return Ok(post);
