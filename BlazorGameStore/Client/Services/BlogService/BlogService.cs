@@ -1,5 +1,4 @@
 ﻿using BlazorGameStore.Shared;
-using System;
 using System.Net.Http.Json;
 
 namespace BlazorGameStore.Client.Services.BlogService
@@ -15,18 +14,29 @@ namespace BlazorGameStore.Client.Services.BlogService
 
         public async Task<BlogPost> GetBlogPostByUrl(string url)
         {
-            //var response = await _httpClient.GetFromJsonAsync<BlogPost>($"https://localhost:7001/api/Blog/{url}");
-            
-            var response = await _httpClient.GetFromJsonAsync<BlogPost>($"/api/Blog/{url}");
-            return response;
+            var result = await _httpClient.GetAsync($"api/Blog/{url}");
+            if (result.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var message = await result.Content.ReadAsStringAsync();
+                Console.WriteLine(message);
+                return new BlogPost { Title = message };
+            }
+            else
+            {
+                return await result.Content.ReadFromJsonAsync<BlogPost>();
+            }
         }
 
         public async Task<List<BlogPost>> GetBlogPosts()
         {
-            //var response = await _httpClient.GetFromJsonAsync<List<BlogPost>>("https://localhost:7001/api/Blog");
-            var response = await _httpClient.GetFromJsonAsync<List<BlogPost>>($"/api/Blog");
-
-            return response;
+            return await _httpClient.GetFromJsonAsync<List<BlogPost>>($"/api/Blog");
         }
+
+        public async Task<BlogPost> CreateBlogPost(BlogPost request)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/Blog", request);
+            return await result.Content.ReadFromJsonAsync<BlogPost>();
+        }
+
     }
 }

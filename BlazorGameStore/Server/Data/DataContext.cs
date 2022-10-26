@@ -13,6 +13,7 @@ namespace BlazorGameStore.Server.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Edition> Editions { get; set; }
         public DbSet<Stats> Stats { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
