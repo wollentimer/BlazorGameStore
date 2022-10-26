@@ -1,4 +1,5 @@
-﻿using BlazorGameStore.Shared;
+﻿using BlazorGameStore.Server.Data;
+using BlazorGameStore.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorGameStore.Server.Controllers
@@ -7,23 +8,23 @@ namespace BlazorGameStore.Server.Controllers
     [ApiController]
     public class BlogController : ControllerBase
     {
-        public List<BlogPost> Posts { get; set; } = new List<BlogPost>()
-        {
-            new BlogPost { Url = "new-tutorial-blazor", Title = "A new blazor tutorial", Description = "This is a new tutorial how to build a blog with Blazor", Content="Lorem ipsum qeqwew wqeww qwe weqwe qwewqewqewqe qqweqweww. Qewewew wqeq w."},
-            new BlogPost { Url = "new-tutorial-asp", Title = "A new asp.net core tutorial", Description = "This is a new asp.net core tutorial about building an Api with Asp.net core", Content="Lorem ipsum qeqwew wqeww qwe weqwe qwewqewqewqe qqweqweww. Qewewew wqeq w."}
-        };
+        private readonly DataContext _context;
 
+        public BlogController(DataContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
         public ActionResult<List<BlogPost>> GetAllBlogPosts()
         {
-            return Ok(Posts);
+            return Ok(_context.BlogPosts);
         }
 
         [HttpGet("{url}")]
         public ActionResult<BlogPost> GetBlogPostsById(string url)
         {
-            var post = Posts.FirstOrDefault(p => p.Url.ToLower().Equals(url.ToLower()));
+            var post = _context.BlogPosts.FirstOrDefault(p => p.Url.ToLower().Equals(url.ToLower()));
             if (post == null)
             {
                 return NotFound("This post does not exist.");
