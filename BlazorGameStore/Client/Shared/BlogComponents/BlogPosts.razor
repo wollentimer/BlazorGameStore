@@ -1,0 +1,31 @@
+﻿@inject IBlogService BlogService
+
+@foreach (var post in Posts)
+{
+    <div style="margin: 20px;">
+        <div>
+            <img src="@post.Image" width="200"/>
+        </div>
+        <div>
+            <h3>
+                @post.Title
+            </h3>
+        </div>
+        <div>
+            @post.Description
+        </div>
+        <div>
+            <a href="/post/@post.Url">Read more...</a>
+        </div>
+    </div>
+}
+
+@code {
+    private List<BlogPost> Posts { get; set; } = new List<BlogPost>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Posts = await BlogService.GetBlogPosts();
+    }
+
+}
