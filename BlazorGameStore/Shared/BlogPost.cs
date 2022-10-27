@@ -23,5 +23,7 @@ namespace BlazorGameStore.Shared
         public bool IsPublished { get; set; } = true;
 
         public bool IsDeleted { get; set; } = false;
+
+        public string Image { get; set; }
     }
 }
